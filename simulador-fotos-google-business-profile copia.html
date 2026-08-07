@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador: ¿tu foto sirve para Google Business Profile? | Luma</title>
+<meta name="description" content="Prueba tu foto real antes de subirla a tu ficha de Google. Revisa tamaño, proporción, formato y peso al instante, todo en tu navegador, sin subir nada a ningún servidor.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="¿Tu foto sirve para Google Business Profile? Pruébala aquí">
+<meta property="og:description" content="Sube tu foto real y en segundos ve si cumple con lo que pide Google: tamaño, proporción, formato y peso. Sin subir nada a ningún servidor.">
+<meta property="og:image" content="https://lumaconsultoriadenegocios.com/api/image/blog/cual-es-la-forma-correcta-de-subir-fotos-a-tu-ficha-de-google">
+<meta property="og:site_name" content="Luma Consultoría de Negocios">
+<meta property="og:locale" content="es_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="¿Tu foto sirve para Google Business Profile? Pruébala aquí">
+<meta name="twitter:description" content="Sube tu foto real y en segundos ve si cumple con lo que pide Google: tamaño, proporción, formato y peso. Sin subir nada a ningún servidor.">
+<meta name="twitter:image" content="https://lumaconsultoriadenegocios.com/api/image/blog/cual-es-la-forma-correcta-de-subir-fotos-a-tu-ficha-de-google">
+
+<meta name="theme-color" content="#05156d">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2305156d'/%3E%3Ctext x='50' y='69' font-family='Arial,Helvetica,sans-serif' font-size='58' font-weight='800' fill='%23ff8201' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#05156d;
+    --orange:#ff8201;
+    --blue-light:#a4cbdc;
+    --peach:#ffe7d2;
+    --white:#ffffff;
+    --ink:#0c1440;
+    --ok:#237046;
+    --warn:#96620a;
+    --fail:#c53a3a;
+    --radius:18px;
+    --shadow: 0 10px 30px rgba(5,21,109,0.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Poppins',sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#fbfcff 0%, #f3f6fc 100%);
+    line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 70px;}
+
+  header.top{background:var(--navy);padding:18px 20px;}
+  .top-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;}
+  .logo{font-weight:800;font-size:22px;letter-spacing:0.5px;color:var(--white);display:flex;align-items:baseline;gap:2px;}
+  .logo span{color:var(--orange);}
+  .top-tag{margin-left:auto;font-size:11px;color:var(--blue-light);font-weight:500;text-transform:uppercase;letter-spacing:1px;}
+
+  .hero{padding:40px 0 6px;}
+  .eyebrow{display:inline-block;background:var(--peach);color:var(--navy);font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:16px;}
+  h1{font-size:clamp(25px,5vw,33px);font-weight:800;color:var(--navy);margin:0 0 14px;line-height:1.25;}
+  .lead{font-size:15.5px;color:#33396b;max-width:60ch;margin:0;}
+  .lead strong{color:var(--navy);}
+
+  .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:20px;}
+  .section-label{font-size:12.5px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;}
+  .section-title{font-size:20px;font-weight:800;color:var(--navy);margin:0 0 10px;}
+  .muted{color:#5a5f86;font-size:14px;}
+
+  /* VARIABLES EXPLAINER */
+  .vars-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px;}
+  .var-item{display:flex;gap:12px;align-items:flex-start;background:#f7f8fd;border-radius:12px;padding:12px 14px;}
+  .var-badge{width:30px;height:30px;border-radius:8px;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+  .var-text b{color:var(--navy);display:block;font-size:14px;margin-bottom:2px;}
+  .var-text span{font-size:13px;color:#5a5f86;}
+  @media(min-width:600px){ .vars-grid{grid-template-columns:1fr 1fr;} }
+
+  /* SIMULATOR */
+  .cat-tabs{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+  .cat-tab{
+    flex:1;min-width:140px;border:2px solid #e6ecf7;background:var(--white);
+    border-radius:12px;padding:12px 10px;cursor:pointer;text-align:center;
+    font-weight:700;font-size:13px;color:var(--navy);transition:all .15s ease;
+  }
+  .cat-tab.active{border-color:var(--navy);background:var(--navy);color:var(--white);}
+  .cat-spec{font-size:12.5px;color:#8a8fb0;margin-top:12px;}
+  .cat-tab.active + .cat-spec{color:#5a5f86;}
+
+  .dropzone{
+    margin-top:16px;border:2.5px dashed var(--blue-light);border-radius:16px;
+    padding:28px 16px;text-align:center;cursor:pointer;background:#fbfdff;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .dropzone.dragover{border-color:var(--orange);background:var(--peach);}
+  .dropzone p{margin:6px 0 0;font-size:13.5px;color:#5a5f86;}
+  .dropzone .dz-title{font-weight:700;color:var(--navy);font-size:15px;}
+  .dz-icon{font-size:30px;}
+  input[type="file"]{display:none;}
+
+  .result-box{margin-top:18px;display:none;}
+  .verdict{
+    border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;
+    font-weight:700;font-size:15px;color:var(--white);
+  }
+  .verdict.ok{background:var(--ok);}
+  .verdict.warn{background:var(--warn);}
+  .verdict.fail{background:var(--fail);}
+  .verdict-icon{font-size:24px;flex-shrink:0;}
+
+  .preview-row{display:flex;gap:16px;margin-top:18px;flex-wrap:wrap;align-items:flex-start;}
+  .preview-mock{flex-shrink:0;}
+  .checklist{flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px;}
+  .check-item{
+    display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;
+    background:#f7f8fd;opacity:0;transform:translateY(6px);animation:riseIn .35s ease forwards;
+  }
+  @keyframes riseIn{to{opacity:1;transform:translateY(0);}}
+  .check-mark{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--white);margin-top:1px;}
+  .check-mark.ok{background:var(--ok);}
+  .check-mark.warn{background:var(--warn);}
+  .check-mark.fail{background:var(--fail);}
+  .check-text b{display:block;font-size:13.5px;color:var(--navy);}
+  .check-text span{font-size:12.5px;color:#5a5f86;}
+
+  /* MOCKUPS */
+  .mock-card{background:#eef1fa;border-radius:14px;padding:14px;width:220px;}
+  .mock-logo-wrap{display:flex;align-items:center;gap:10px;}
+  .mock-circle{width:64px;height:64px;border-radius:50%;overflow:hidden;background:var(--blue-light);flex-shrink:0;border:3px solid var(--white);box-shadow:0 4px 10px rgba(5,21,109,.15);}
+  .mock-circle img{width:100%;height:100%;object-fit:cover;}
+  .mock-biz-name{font-size:13px;font-weight:700;color:var(--navy);}
+  .mock-stars{color:#f5a623;font-size:11px;}
+
+  .mock-wide{width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:var(--blue-light);margin-bottom:8px;}
+  .mock-wide img{width:100%;height:100%;object-fit:cover;}
+
+  .mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+  .mock-cell{aspect-ratio:4/3;border-radius:6px;overflow:hidden;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--white);}
+  .mock-cell img{width:100%;height:100%;object-fit:cover;}
+
+  .heic-note{margin-top:14px;font-size:13px;color:#6a4a12;background:#fff3e2;border-radius:10px;padding:10px 12px;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--orange);color:var(--white);border:none;font-family:'Poppins',sans-serif;
+    font-weight:700;font-size:14px;padding:12px 20px;border-radius:12px;cursor:pointer;
+    box-shadow:0 8px 18px rgba(255,130,1,0.28);
+  }
+  .btn.secondary{background:transparent;color:var(--navy);border:2px solid var(--navy);box-shadow:none;}
+  .btn-row{margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;}
+  .wa-btn{background:#25D366;}
+
+  /* CHEAT SHEET */
+  .spec-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px;}
+  .spec-table th{text-align:left;color:var(--navy);font-size:11.5px;text-transform:uppercase;letter-spacing:0.4px;padding:8px 6px;border-bottom:2px solid #e6ecf7;}
+  .spec-table td{padding:10px 6px;border-bottom:1px solid #eef0fb;color:#33396b;}
+  .spec-table td:first-child{font-weight:700;color:var(--navy);}
+
+  .tip-list{margin-top:14px;display:flex;flex-direction:column;gap:10px;}
+  .tip-row{display:flex;gap:10px;background:#f7f8fd;border-radius:10px;padding:11px 13px;font-size:13.5px;color:#33396b;}
+  .tip-row b{color:var(--navy);}
+
+  .freq-callout{margin-top:16px;background:var(--peach);border-radius:12px;padding:14px 16px;font-size:13.5px;color:#4a3418;}
+  .freq-callout b{color:var(--navy);}
+
+  .cta{margin-top:24px;background:var(--navy);border-radius:20px;padding:26px 24px;text-align:center;color:var(--white);}
+  .cta h3{font-size:19px;margin:0 0 8px;font-weight:800;}
+  .cta p{font-size:13.5px;color:var(--blue-light);margin:0 0 16px;}
+  footer.foot{text-align:center;padding:22px 20px 40px;font-size:12px;color:#8a8fb0;}
+  footer.foot a{color:var(--navy);font-weight:600;text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="logo">Lum<span>a</span></div>
+    <div class="top-tag">Consultoría de digitalización</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="eyebrow">Simulador · Fotos de Google Business Profile</span>
+    <h1>¿Esta foto sirve para tu ficha de Google? Pruébala antes de subirla</h1>
+    <p class="lead">Elige el tipo de foto, sube la tuya real y en segundos te decimos si cumple. <strong>Todo pasa en tu navegador: tu foto no se sube a ningún servidor.</strong></p>
+  </section>
+
+  <!-- VARIABLES EXPLAINER -->
+  <div class="card">
+    <div class="section-label">Antes de probar</div>
+    <div class="section-title">Esto es lo que Google realmente mira</div>
+    <div class="vars-grid">
+      <div class="var-item"><div class="var-badge">1</div><div class="var-text"><b>Tamaño</b><span>Cada tipo de foto tiene un mínimo de píxeles. Muy pequeña, se ve borrosa.</span></div></div>
+      <div class="var-item"><div class="var-badge">2</div><div class="var-text"><b>Proporción</b><span>Cuadrada, panorámica u horizontal según el tipo. Si no encaja, Google la recorta.</span></div></div>
+      <div class="var-item"><div class="var-badge">3</div><div class="var-text"><b>Formato</b><span>JPG, PNG, HEIC o WEBP. Otros formatos no se aceptan.</span></div></div>
+      <div class="var-item"><div class="var-badge">4</div><div class="var-text"><b>Peso</b><span>Máximo 5 MB por imagen. Más pesada, no se sube.</span></div></div>
+      <div class="var-item"><div class="var-badge">5</div><div class="var-text"><b>Nombre del archivo</b><span>Un nombre descriptivo le dice a Google qué muestra la foto.</span></div></div>
+    </div>
+  </div>
+
+  <!-- SIMULATOR -->
+  <div class="card">
+    <div class="section-label">Tu herramienta principal</div>
+    <div class="section-title">Prueba tu foto</div>
+    <p class="muted">Primero elige qué tipo de foto vas a subir.</p>
+
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="cat-spec" id="catSpec"></div>
+
+    <div class="dropzone" id="dropzone">
+      <div class="dz-icon">📷</div>
+      <div class="dz-title">Arrastra tu foto aquí o toca para elegirla</div>
+      <p>Se queda en tu celular o computadora. No se sube a ningún lado.</p>
+      <input type="file" id="fileInput" accept="image/*,.heic,.heif">
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="verdict" id="verdict"></div>
+      <div class="preview-row">
+        <div class="preview-mock" id="previewMock"></div>
+        <div class="checklist" id="checklist"></div>
+      </div>
+      <div class="heic-note" id="heicNote" style="display:none;">
+        No pudimos abrir la vista previa de este archivo HEIC en este navegador. Igual revisamos el peso y el nombre. Para confirmar el tamaño exacto, revisa la foto en tu galería, o conviértela a JPG antes de subirla (la mayoría de los celulares lo hacen automático al compartir por WhatsApp o correo).
+      </div>
+      <div class="btn-row">
+        <button class="btn secondary" id="tryAnotherBtn">Probar otra foto</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUE FOTOGRAFIAR -->
+  <div class="card">
+    <div class="section-label">Si tienes un negocio de servicios</div>
+    <div class="section-title">Qué fotografiar primero</div>
+    <div class="tip-list">
+      <div class="tip-row"><span>🚐</span><div><b>El vehículo o uniforme</b> con el que llegas a los trabajos, para que te reconozcan en su calle.</div></div>
+      <div class="tip-row"><span>👷</span><div><b>El equipo trabajando</b> en una tarea real, con el permiso del cliente cuando aplique.</div></div>
+      <div class="tip-row"><span>✨</span><div><b>Resultados de antes y después</b>, de las fotos que más convencen en servicios.</div></div>
+      <div class="tip-row"><span>🙂</span><div><b>Una foto del equipo o del dueño</b>, le pone cara humana a tu marca.</div></div>
+    </div>
+    <div class="freq-callout"><b>Ritmo recomendado:</b> 2 a 3 fotos nuevas al mes. Mejor eso que subir 40 un solo día y no volver a tocar la ficha en meses.</div>
+  </div>
+
+  <!-- CHEAT SHEET -->
+  <div class="card">
+    <div class="section-label">Chuleta rápida</div>
+    <div class="section-title">Los 3 formatos oficiales</div>
+    <table class="spec-table">
+      <tr><th>Tipo</th><th>Proporción</th><th>Tamaño mínimo</th></tr>
+      <tr><td>Logo</td><td>Cuadrada (1:1)</td><td>720 × 720 px</td></tr>
+      <tr><td>Portada</td><td>Panorámica (16:9)</td><td>1024 × 576 px</td></tr>
+      <tr><td>Foto del negocio</td><td>Horizontal (4:3)</td><td>1200 × 900 px</td></tr>
+    </table>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h3>¿Quieres que revisemos tu ficha completa?</h3>
+    <p>No solo las fotos: categoría, descripción, atributos y todo lo demás.</p>
+    <div class="btn-row" style="justify-content:center;">
+      <a class="btn wa-btn" href="https://wa.me/584124784922?text=Hola%2C%20quiero%20ayuda%20para%20revisar%20mi%20ficha%20de%20Google." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+      <a class="btn secondary" style="border-color:var(--blue-light);color:var(--white);" href="https://whatsapp.com/channel/0029VbDaq0h9cDDaGv3oFH36" target="_blank" rel="noopener">Únete a nuestra comunidad</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="foot">
+  Recurso creado por <a href="https://www.lumaconsultoriadenegocios.com" target="_blank" rel="noopener">Luma Consultoría de Negocios</a>
+</footer>
+
+<script>
+(function(){
+  var specs = {
+    logo: {
+      label: 'Logo', shapeLabel: 'cuadrada (1:1)',
+      ratioTarget: 1, ratioTolerance: 0.06,
+      minW: 720, minH: 720,
+      specText: 'Cuadrada, mínimo 720×720 px.'
+    },
+    portada: {
+      label: 'Portada', shapeLabel: 'panorámica (16:9)',
+      ratioTarget: 16/9, ratioTolerance: 0.18,
+      minW: 1024, minH: 576,
+      specText: 'Panorámica 16:9, cerca de 1024×576 px.'
+    },
+    negocio: {
+      label: 'Foto del negocio', shapeLabel: 'horizontal (4:3)',
+      ratioTarget: 4/3, ratioTolerance: 0.18,
+      minW: 1200, minH: 900,
+      specText: 'Horizontal 4:3, cerca de 1200×900 px.'
+    }
+  };
+
+  var currentCat = 'logo';
+  var catTabs = document.getElementById('catTabs');
+  var catSpec = document.getElementById('catSpec');
+
+  Object.keys(specs).forEach(function(key){
+    var tab = document.createElement('div');
+    tab.className = 'cat-tab' + (key === currentCat ? ' active' : '');
+    tab.textContent = specs[key].label;
+    tab.addEventListener('click', function(){
+      currentCat = key;
+      document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active');});
+      tab.classList.add('active');
+      updateSpecText();
+      resetResult();
+    });
+    catTabs.appendChild(tab);
+  });
+
+  function updateSpecText(){
+    catSpec.textContent = 'Debe ser: ' + specs[currentCat].specText;
+  }
+  updateSpecText();
+
+  var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var resultBox = document.getElementById('resultBox');
+  var verdictEl = document.getElementById('verdict');
+  var checklistEl = document.getElementById('checklist');
+  var previewMockEl = document.getElementById('previewMock');
+  var heicNoteEl = document.getElementById('heicNote');
+  var tryAnotherBtn = document.getElementById('tryAnotherBtn');
+
+  dropzone.addEventListener('click', function(){ fileInput.click(); });
+  dropzone.addEventListener('dragover', function(e){ e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', function(){ dropzone.classList.remove('dragover'); });
+  dropzone.addEventListener('drop', function(e){
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if(e.dataTransfer.files && e.dataTransfer.files[0]){
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+  fileInput.addEventListener('change', function(){
+    if(fileInput.files && fileInput.files[0]){
+      handleFile(fileInput.files[0]);
+    }
+  });
+  tryAnotherBtn.addEventListener('click', function(){
+    resetResult();
+    fileInput.value = '';
+  });
+
+  function resetResult(){
+    resultBox.style.display = 'none';
+    checklistEl.innerHTML = '';
+    previewMockEl.innerHTML = '';
+    heicNoteEl.style.display = 'none';
+  }
+
+  function isHeic(file){
+    var name = file.name.toLowerCase();
+    return name.endsWith('.heic') || name.endsWith('.heif') || file.type === 'image/heic' || file.type === 'image/heif';
+  }
+
+  function handleFile(file){
+    resetResult();
+    var spec = specs[currentCat];
+    var heic = isHeic(file);
+
+    if(heic){
+      evaluateAndRender(file, null, spec, true);
+      return;
+    }
+
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function(){
+      var info = { width: img.naturalWidth, height: img.naturalHeight, url: url };
+      evaluateAndRender(file, info, spec, false);
+    };
+    img.onerror = function(){
+      evaluateAndRender(file, null, spec, true);
+    };
+    img.src = url;
+  }
+
+  function evaluate(file, imgInfo, spec){
+    var results = [];
+
+    var ext = (file.name.split('.').pop() || '').toLowerCase();
+    var validExt = ['jpg','jpeg','png','webp','heic','heif'];
+    var formatOk = validExt.indexOf(ext) !== -1;
+    results.push({
+      label: 'Formato', status: formatOk ? 'ok' : 'fail',
+      detail: formatOk ? ('.' + ext + ' es un formato que Google acepta.') : ('.' + ext + ' no es un formato aceptado. Usa JPG, PNG, HEIC o WEBP.')
+    });
+
+    var sizeMB = file.size / (1024*1024);
+    var sizeOk = file.size <= 5*1024*1024;
+    results.push({
+      label: 'Peso', status: sizeOk ? 'ok' : 'fail',
+      detail: sizeOk ? (sizeMB.toFixed(1) + ' MB, dentro del límite de 5 MB.') : (sizeMB.toFixed(1) + ' MB supera el límite de 5 MB. Comprime la imagen antes de subirla.')
+    });
+
+    var genericPattern = /^(img|imagen|dsc|dscn|photo|foto|image|whatsapp)[\s_-]*\d*$/i;
+    var screenshotPattern = /captura|screenshot/i;
+    var nameNoExt = file.name.replace(/\.[^.]+$/, '');
+    var isGeneric = genericPattern.test(nameNoExt) || screenshotPattern.test(nameNoExt) || /^\d+$/.test(nameNoExt);
+    results.push({
+      label: 'Nombre del archivo', status: isGeneric ? 'warn' : 'ok',
+      detail: isGeneric ? ('"' + file.name + '" es un nombre genérico. Prueba algo como "limpieza-profunda-cocina-miami.jpg".') : ('"' + file.name + '" es un nombre descriptivo. Bien ahí.')
+    });
+
+    if(imgInfo){
+      var resOk = imgInfo.width >= spec.minW && imgInfo.height >= spec.minH;
+      results.push({
+        label: 'Resolución', status: resOk ? 'ok' : 'fail',
+        detail: resOk ? (imgInfo.width + '×' + imgInfo.height + ' px cumple el mínimo de ' + spec.minW + '×' + spec.minH + '.') : (imgInfo.width + '×' + imgInfo.height + ' px es menor al mínimo de ' + spec.minW + '×' + spec.minH + '. Se puede ver borrosa.')
+      });
+
+      var actualRatio = imgInfo.width / imgInfo.height;
+      var ratioOk = Math.abs(actualRatio - spec.ratioTarget) <= spec.ratioTolerance;
+      results.push({
+        label: 'Proporción', status: ratioOk ? 'ok' : 'warn',
+        detail: ratioOk ? ('Es ' + spec.shapeLabel + ', tal como la pide Google.') : ('No es ' + spec.shapeLabel + '. Google la va a recortar para que encaje, mira la maqueta a la izquierda.')
+      });
+    } else {
+      results.push({
+        label: 'Resolución y proporción', status: 'warn',
+        detail: 'No pudimos leer estos datos en este navegador para este formato. Revísalos manualmente antes de subir.'
+      });
+    }
+
+    return results;
+  }
+
+  function overallStatus(results){
+    if(results.some(function(r){return r.status === 'fail';})) return 'fail';
+    if(results.some(function(r){return r.status === 'warn';})) return 'warn';
+    return 'ok';
+  }
+
+  function renderMock(spec, imgInfo){
+    previewMockEl.innerHTML = '';
+    var card = document.createElement('div');
+    card.className = 'mock-card';
+
+    if(currentCat === 'logo'){
+      card.innerHTML =
+        '<div class="mock-logo-wrap">' +
+          '<div class="mock-circle" id="mockImgWrap"></div>' +
+          '<div><div class="mock-biz-name">Tu Negocio LLC</div><div class="mock-stars">★★★★★ 4.9</div></div>' +
+        '</div>';
+    } else if(currentCat === 'portada'){
+      card.innerHTML =
+        '<div class="mock-wide" id="mockImgWrap"></div>' +
+        '<div class="mock-biz-name">Así se ve tu portada</div>';
+    } else {
+      card.innerHTML =
+        '<div class="mock-grid">' +
+          '<div class="mock-cell" id="mockImgWrap">📷</div>' +
+          '<div class="mock-cell">🧹</div>' +
+          '<div class="mock-cell">✨</div>' +
+        '</div>';
+    }
+    previewMockEl.appendChild(card);
+
+    var mockImgWrap = document.getElementById('mockImgWrap');
+    if(imgInfo && mockImgWrap){
+      mockImgWrap.innerHTML = '';
+      var img = document.createElement('img');
+      img.src = imgInfo.url;
+      mockImgWrap.appendChild(img);
+    }
+  }
+
+  function evaluateAndRender(file, imgInfo, spec, heicIssue){
+    var results = evaluate(file, imgInfo, spec);
+    var status = overallStatus(results);
+
+    resultBox.style.display = 'block';
+    verdictEl.className = 'verdict ' + status;
+    var verdictText = status === 'ok' ? 'Lista para subir tal cual.' : (status === 'warn' ? 'Se puede subir, pero mejórala primero.' : 'Todavía no cumple. Corrígela antes de subirla.');
+    var verdictIcon = status === 'ok' ? '✓' : (status === 'warn' ? '!' : '✕');
+    verdictEl.innerHTML = '<span class="verdict-icon">' + verdictIcon + '</span><span>' + verdictText + '</span>';
+
+    renderMock(spec, imgInfo);
+
+    checklistEl.innerHTML = '';
+    results.forEach(function(r, i){
+      var row = document.createElement('div');
+      row.className = 'check-item';
+      row.style.animationDelay = (i * 0.09) + 's';
+      var mark = r.status === 'ok' ? '✓' : (r.status === 'warn' ? '!' : '✕');
+      row.innerHTML =
+        '<div class="check-mark ' + r.status + '">' + mark + '</div>' +
+        '<div class="check-text"><b>' + r.label + '</b><span>' + r.detail + '</span></div>';
+      checklistEl.appendChild(row);
+    });
+
+    heicNoteEl.style.display = heicIssue ? 'block' : 'none';
+  }
+
+})();
+</script>
+
+</body>
+</html>
